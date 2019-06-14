@@ -1,0 +1,43 @@
+---
+# httpd is handled by the base-apache role upstream
+- name: Install php and git
+  become: yes
+  become_method: sudo
+  yum: name={{ item }} state=present
+  with_items:
+   - php
+   - php-mysql
+   - git
+
+- name: Configure SELinux to allow httpd to connect to remote database
+  become: yes
+  become_method: sudo
+  seboolean: name=httpd_can_network_connect_db state=true persistent=yes
+  when: sestatus.rc != 0
+
+- name: Configure httpd.conf to load index.php by default
+  become: yes
+  become_method: sudo
+  replace:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '(\s+)DirectoryIndex\ index.html(\s+.*)?$'
+    replace: '\1DirectoryIndex index.php\2'
+    backup: yes
+  notify: restart httpd
+
+- name: Copy the code from repository
+  become: yes
+  become_method: sudo
+  git: repo={{ repository }} version={{ webapp_version }} dest=/var/www/html/ force=yes
+ 
+- name: Open firewalld port http in permanent configuration
+  become: yes
+  become_method: sudo
+  firewalld: zone=public service=http permanent=true state=enabled
+  notify: restart firewalld
+
+- name: Open firewalld port https in permanent configuration
+  become: yes
+  become_method: sudo
+  firewalld: zone=public service=https permanent=true state=enabled
+  notify: restart firewalld
