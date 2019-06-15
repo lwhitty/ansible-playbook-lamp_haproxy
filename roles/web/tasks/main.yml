@@ -4,7 +4,7 @@
   become: yes
   become_method: sudo
   yum: name={{ item }} state=present
-  with_items:
+  loop:
    - php
    - php-mysql
    - git
@@ -29,7 +29,7 @@
   become: yes
   become_method: sudo
   git: repo={{ repository }} version={{ webapp_version }} dest=/var/www/html/ force=yes
- 
+
 - name: Open firewalld port http in permanent configuration
   become: yes
   become_method: sudo
