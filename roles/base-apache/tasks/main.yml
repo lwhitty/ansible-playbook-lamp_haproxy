@@ -5,7 +5,7 @@
   become: yes
   become_method: sudo
   yum: name={{ item }} state=present
-  with_items:
+  loop:
    - httpd
 
 - name: http service state
