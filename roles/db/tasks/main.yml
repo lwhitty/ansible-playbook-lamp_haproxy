@@ -36,12 +36,12 @@
 - name: Create Application Database
   become: yes
   become_method: sudo
-  mysql_db: name={{ dbname }} state=present
+  community.mysql.mysql_db: name={{ dbname }} state=present
 
 - name: Create Application DB User
   become: yes
   become_method: sudo
-  mysql_user: name={{ dbuser }} password={{ upassword }} priv=*.*:ALL host='%' state=present
+  community.mysql.mysql_user: name={{ dbuser }} password={{ upassword }} priv=*.*:ALL host='%' state=present
 
 - name: Open firewalld port 3306 in running configuration
   become: yes
