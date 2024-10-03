@@ -9,7 +9,7 @@
   loop:
 #   - mysql-server
    - mariadb-server
-   - MySQL-python
+   - python36-mysql
 
 #- name: Configure SELinux to start mysql on any port
 - name: Configure SELinux to start Mariadb on any port
