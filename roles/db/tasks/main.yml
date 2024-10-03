@@ -23,6 +23,7 @@
   become: yes
   become_method: sudo
   template: src=my.cnf.j2 dest=/etc/my.cnf
+  template: src=my.cnf.j2 dest=/root/.my.cnf
   notify:
   - restart mysql
 
