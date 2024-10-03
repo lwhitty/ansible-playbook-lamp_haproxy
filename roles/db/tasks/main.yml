@@ -1,5 +1,5 @@
 ---
-# This role will install MySQL and create db user and give permissions.https://github.com/lwhitty/ansible-playbook-lamp_haproxy/blob/master/roles/db/tasks/main.yml
+# This role will install MySQL and create db user and give permissions.
 
 #- name: Install Mysql package
 - name: Install Mariadb package
@@ -9,7 +9,7 @@
   loop:
 #   - mysql-server
    - mariadb-server
-   - python2-PyMySQL
+   - MySQL-python
 
 #- name: Configure SELinux to start mysql on any port
 - name: Configure SELinux to start Mariadb on any port
@@ -23,7 +23,6 @@
   become: yes
   become_method: sudo
   template: src=my.cnf.j2 dest=/etc/my.cnf
-  template: src=my.cnf.j2 dest=/root/.my.cnf
   notify:
   - restart mysql
 
