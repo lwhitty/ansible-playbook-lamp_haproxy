@@ -6,8 +6,8 @@
   become_method: sudo
   yum: name={{ item }} state=present
   loop:
-   - python3-libselinux
-   - python3-libsemanage
+   - libselinux-python
+   - libsemanage-python
 
 - name: Create the repository for EPEL
   become: yes
